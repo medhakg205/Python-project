@@ -72,6 +72,41 @@ def InsertIntoObservations():
         (5, '2025-11-04 11:00:00', 25.8, 63, 11.2);'''
         cursor.execute(query2)
         cnc.commit()
+        
+def insert_new_observation():
+    try:
+        loc_id = int(input("\nEnter Location ID: "))
+
+        # Check if location exists
+        cursor.execute("SELECT city FROM locations WHERE location_id = %s", (loc_id,))
+        location = cursor.fetchone()
+
+        if not location:
+            print("❌ Invalid Location ID! No such location exists.")
+            return
+
+        print(f"Location found: {location[0]}")
+
+        # Get weather values
+        timestamp = input("Enter timestamp (YYYY-MM-DD HH:MM:SS): ").strip()
+        temp = float(input("Enter temperature (°C): "))
+        humidity = int(input("Enter humidity (%): "))
+        wind_speed = float(input("Enter wind speed (km/h): "))
+
+        # Insert query
+        query = '''
+            INSERT INTO observations (location_id, timestamp, temp, humidity, wind_speed_kmh)
+            VALUES (%s, %s, %s, %s, %s);
+        '''
+
+        cursor.execute(query, (loc_id, timestamp, temp, humidity, wind_speed))
+        cnc.commit()
+
+        print("\n✅ New observation record inserted successfully!")
+
+    except Exception as e:
+        print("\n❌ Error inserting observation:", e)
+
 
 def editCity(locid):
     qry = 'Select * from locations where location_id = %s;'
