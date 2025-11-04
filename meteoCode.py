@@ -26,7 +26,7 @@ def createTable():
     cursor.execute(qry1)
 
     qry2 = '''CREATE TABLE IF NOT EXISTS Observations (
-            obvs_id INTEGER PRIMARY KEY,
+            obvs_id INTEGER PRIMARY KEY auto_increment,
             location_id INTEGER,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             temp float NOT NULL,
