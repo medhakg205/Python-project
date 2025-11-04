@@ -151,23 +151,35 @@ def adminview():
     cnc.commit()
 
 def removeCity():
-    cursor.execute("select * from locations, observations;")
+    cursor.execute("select * from locations;")
     data = cursor.fetchall()
-    print(data)
-
+    for i in data:
+        print(i[0],i[1], end  = '\n')
     locid = int(input("\nEnter Location ID you want to remove: "))
-
-    qry = ' select exists (select 1 from locations where location_id =  %s); '
-    cursor.execute(qry, (locid,))
-    data = cursor.fetchall()
+    conf = input("\nAre you sure you want to remove this location? (y/n): ")
+    if conf.lower() == 'y':
+        qry = ' select exists (select 1 from locations where location_id =  %s); '
+        cursor.execute(qry, (locid,))
+        data = cursor.fetchall()
 
     if qry:
-        cursor.execute("delete from locations where location_id= %s;", (locid,))
+        cursor.execute("delete from observations where location_id= %s;", (locid,))
         cnc.commit()
-        print(f"\nSuccessfully removed.")
+        try:
+
+            cursor.execute("DELETE FROM Observations WHERE location_id = %s;", (locid,))
+
+            cursor.execute("DELETE FROM locations WHERE location_id = %s;", (locid,))
+
+            cnc.commit()
+            print(f"\nSuccessfully removed.")
+
+        except Exception as e:
+            print(f"\nAn error occurred during deletion: {e}")
 
     else:
         print(f"\nUnable to find Location ID")
+
 
 def analyze_weather_stats(location_id, days=7):
     """Analyzes the fetched temperature data using NumPy."""
