@@ -218,10 +218,7 @@ def fetch_temperature_data(location_id, days=7):
         cursor.execute(sql_select, (location_id, days))
         # Use a list comprehension to flatten the list of tuples into a simple list of numbers
         temperature_list = [row[0] for row in cursor.fetchall()]
-        print("The following temperatures have been recorded this week")
-        for i in temperature_list:
-            print(i)
-        return ''
+        return temperature_list
     
     except:
         print(f"Error fetching data.")
