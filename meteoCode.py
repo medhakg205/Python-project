@@ -236,15 +236,7 @@ def fetch_temperature_data(location_id, days=7):
         print(f"Error fetching data.")
         return []
 
-
-
-
-
-
-
-
-
-
+#=========================================================
 
 def main():
         header1 = "WELCOME TO WEATHER-WISE"
@@ -261,15 +253,16 @@ def main():
         result = login()
 
         if result:
-        while True:
-            print('''\n    
-                 1. Load
-                 2. Remove
-                 3. Edit
-                 If you wish to exit, type '0'
-                ''')
-            ch = int(input('Enter your choice: '))
-
-            if ch == 0:
-                print("\nGoodbye! See you soon!")
-                break
+                while True:
+                    print('''\n    
+                         1. Add Data
+                         2. Edit Data
+                         3. Remove Data
+                         4. View Only Mode
+                         If you wish to exit, type '0'
+                        ''')
+                    ch = int(input('Enter your choice: '))
+        
+                    if ch == 0:
+                        print("\nGoodbye! See you soon!")
+                        break
