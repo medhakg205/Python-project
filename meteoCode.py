@@ -246,14 +246,15 @@ def main():
         result = login()
 
         if result:
-            while True:
-                print('''\n    
+        while True:
+            print('''\n    
                  1. Load
                  2. Remove
                  3. Edit
-                 If you wish to exit, type 'exit'
+                 If you wish to exit, type '0'
                 ''')
-                ch = int(input('Enter your choice: '))
-                    
-                if ch.lower() == 'exit':
-                         print("\nGoodbye! See you soon!")
+            ch = int(input('Enter your choice: '))
+
+            if ch == 0:
+                print("\nGoodbye! See you soon!")
+                break
