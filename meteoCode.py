@@ -52,6 +52,17 @@ def editCity(locid):
     cnc.commit()
     print(f"\nName has successfully been changed to {cityn} .")
 
+def login():
+    user = input("Admin Login or Client Login: ")
+    if user.lower() == 'admin':
+        passw = int(input("Enter password: "))
+        if passw == 123:
+            return True
+        else:
+            print("Invalid password")
+    else:
+        return False
+
 def generate_initial_data(conn):
     """Generates synthetic weather data for multiple dates and locations."""
     cursor = cnc.cursor()
