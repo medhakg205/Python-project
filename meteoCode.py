@@ -254,3 +254,6 @@ def main():
                  If you wish to exit, type 'exit'
                 ''')
                 ch = int(input('Enter your choice: '))
+                    
+                 if ch.lower() == 'exit':
+                         print("\nGoodbye! See you soon!")
