@@ -1,6 +1,7 @@
 import mysql.connector as con
 import random
 from datetime import datetime, timedelta
+import re
 
 cnc = con.connect(
         host = 'localhost',
@@ -77,10 +78,15 @@ def editCity(locid):
     d = cursor.fetchone()
 
     print(f"\nWhat would you like to change the name {d[1]} to?")
-    cityn = input()
+    cityn = input().strip()
+
+    # REGEX: Only letters and spaces
+    if not re.match("^[A-Za-z ]+$", cityn):
+        print("Invalid city name! Use only letters and spaces.")
+        return
 
     qrynew = ''' update locations set city = %s where location_id = %s '''
-    cursor.execute(qrynew,(cityn, locid))
+    cursor.execute(qrynew, (cityn, locid))
     cnc.commit()
     print(f"\nName has successfully been changed to {cityn} .")
 
