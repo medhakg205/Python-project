@@ -39,7 +39,7 @@ def createTable():
     cursor.execute(qry2)
 
     cnc.commit()
-def insertintolocations():
+def InsertIntoLocations():
         query = "INSERT INTO locations (city, state, latitude, longitude) VALUES (%s, %s, %s, %s)"
 
         data = [
@@ -57,7 +57,7 @@ def insertintolocations():
         cursor.executemany(query, data)
         cnc.commit()
 
-def insertintoobservations():
+def InsertIntoObservations():
         query2='''INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
         (1, '2025-11-04 08:00:00', 28.5, 65, 12.4),
         (1, '2025-11-04 14:00:00', 33.2, 58, 15.1),
@@ -255,5 +255,5 @@ def main():
                 ''')
                 ch = int(input('Enter your choice: '))
                     
-                 if ch.lower() == 'exit':
+                if ch.lower() == 'exit':
                          print("\nGoodbye! See you soon!")
