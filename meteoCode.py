@@ -247,7 +247,7 @@ def main():
 
         if result:
             while True:
-                print('''\n       WELCOME
+                print('''\n    
                  1. Load
                  2. Remove
                  3. Edit
