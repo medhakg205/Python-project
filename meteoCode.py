@@ -220,3 +220,30 @@ def fetch_temperature_data(location_id, days=7):
         print(f"Error fetching data.")
         return []
 
+
+
+
+
+
+
+
+
+
+
+
+def main():
+        header1 = "WELCOME TO WEATHER-WISE"
+        header2 = "Meteorological Data Analysis"
+
+        try:
+            terminal_width = shutil.get_terminal_size().columns
+        except:
+            terminal_width = 80  #default in some platforms
+
+        print(header1.center(terminal_width))
+        print(header2.center(terminal_width), end = '\n\n')
+
+        result = login()
+        if result:
+            print("PLease choose a function to execute: ")
+            print("1.Load Data\n2.Edit Data\n3.Remove Data\n4.View Only Mode\n5.Logout")
