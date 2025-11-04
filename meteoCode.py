@@ -57,7 +57,7 @@ def insertintolocations():
         cnc.commit()
 
 def insertintoobservations():
-        query2="INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
+        query2='''INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
         (1, '2025-11-04 08:00:00', 28.5, 65, 12.4),
         (1, '2025-11-04 14:00:00', 33.2, 58, 15.1),
         (1, '2025-11-03 08:00:00', 27.8, 68, 10.3),
@@ -67,7 +67,7 @@ def insertintoobservations():
         (3, '2025-11-03 13:00:00', 22.1, 70, 6.8),
         (4, '2025-11-04 10:00:00', 30.5, 55, 20.3),
         (4, '2025-11-03 16:00:00', 31.0, 50, 18.9),
-        (5, '2025-11-04 11:00:00', 25.8, 63, 11.2);"
+        (5, '2025-11-04 11:00:00', 25.8, 63, 11.2);'''
         cursor.execute(query2)
         cnc.commit()
 
