@@ -244,6 +244,13 @@ def main():
         print(header2.center(terminal_width), end = '\n\n')
 
         result = login()
+
         if result:
-            print("PLease choose a function to execute: ")
-            print("1.Load Data\n2.Edit Data\n3.Remove Data\n4.View Only Mode\n5.Logout")
+            while True:
+                print('''\n       WELCOME
+                 1. Load
+                 2. Remove
+                 3. Edit
+                 If you wish to exit, type 'exit'
+                ''')
+                ch = int(input('Enter your choice: '))
