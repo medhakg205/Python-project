@@ -149,3 +149,25 @@ def analyze_weather_stats(location_id, days=7):
 # def admin_view_reports_menu():
 #     # ... ask admin for location_id and days ...
 #     analyze_weather_stats(location_id=1, days=7)
+
+def fetch_temperature_data(location_id, days=7):
+
+    # SQL to get temperature and timestamp for the location
+    sql_select = '''
+        SELECT temperature_c
+        FROM Observations
+        WHERE location_id = ? 
+        AND timestamp >= datetime('now', ?)
+        ORDER BY timestamp DESC
+    '''
+
+    try:
+        # Fetch temperatures for the last 7 days
+        cursor.execute(sql_select, (location_id, f'-{days} day'))
+        # Use a list comprehension to flatten the list of tuples into a simple list of numbers
+        temperature_list = [row[0] for row in cursor.fetchall()]
+        return temperature_list
+    
+    except:
+        print(f"Error fetching data.")
+        return []
