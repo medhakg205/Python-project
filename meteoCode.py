@@ -38,6 +38,38 @@ def createTable():
     cursor.execute(qry2)
 
     cnc.commit()
+def insertintolocations():
+        query = "INSERT INTO locations (city, state, latitude, longitude) VALUES (%s, %s, %s, %s)"
+
+        data = [
+        ('Mumbai', 'Maharashtra', 19.0760, 72.8777),
+        ('Delhi', 'Delhi', 28.6139, 77.2090),
+        ('Bengaluru', 'Karnataka', 12.9716, 77.5946),
+        ('Chennai', 'Tamil Nadu', 13.0827, 80.2707),
+        ('Kolkata', 'West Bengal', 22.5726, 88.3639),
+        ('Hyderabad', 'Telangana', 17.3850, 78.4867),
+        ('Pune', 'Maharashtra', 18.5204, 73.8567),
+        ('Ahmedabad', 'Gujarat', 23.0225, 72.5714),
+        ('Jaipur', 'Rajasthan', 26.9124, 75.7873),
+        ('Lucknow', 'Uttar Pradesh', 26.8467, 80.9462)]
+
+        cursor.executemany(query, data)
+        cnc.commit()
+
+def insertintoobservations():
+        query2="INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
+        (1, '2025-11-04 08:00:00', 28.5, 65, 12.4),
+        (1, '2025-11-04 14:00:00', 33.2, 58, 15.1),
+        (1, '2025-11-03 08:00:00', 27.8, 68, 10.3),
+        (2, '2025-11-04 09:00:00', 21.4, 72, 8.7),
+        (2, '2025-11-03 15:00:00', 24.0, 69, 9.8),
+        (3, '2025-11-04 07:00:00', 17.6, 80, 5.4),
+        (3, '2025-11-03 13:00:00', 22.1, 70, 6.8),
+        (4, '2025-11-04 10:00:00', 30.5, 55, 20.3),
+        (4, '2025-11-03 16:00:00', 31.0, 50, 18.9),
+        (5, '2025-11-04 11:00:00', 25.8, 63, 11.2);"
+        cursor.execute(query2)
+        cnc.commit()
 
 def editCity(locid):
     qry = 'Select * from locations where location_id = %s;'
