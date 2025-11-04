@@ -214,3 +214,5 @@ def fetch_temperature_data(location_id, days=7):
         print(f"Error fetching data.")
         return []
 createTable()
+insertintolocations()
+insertintoobservations()
