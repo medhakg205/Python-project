@@ -201,27 +201,30 @@ def analyze_weather_stats(location_id, days=7):
 #     analyze_weather_stats(location_id=1, days=7)
 
 def fetch_temperature_data(location_id, days=7):
-
-    # SQL to get temperature and timestamp for the location
-    sql_select = '''
-        SELECT temperature_c
-        FROM Observations
-        WHERE location_id = ? 
-        AND timestamp >= datetime('now', ?)
-        ORDER BY timestamp DESC
-    '''
-
     try:
+
+        # SQL to get temperature and timestamp for the location
+        sql_select = '''
+            SELECT temp
+            FROM Observations
+            WHERE location_id = %s 
+            AND timestamp >= NOW()-INTERVAL %s DAY
+            ORDER BY timestamp DESC
+        '''
+
+    
         # Fetch temperatures for the last 7 days
-        cursor.execute(sql_select, (location_id, f'-{days} day'))
+        cursor.execute(sql_select, (location_id, days))
         # Use a list comprehension to flatten the list of tuples into a simple list of numbers
         temperature_list = [row[0] for row in cursor.fetchall()]
-        return temperature_list
+        print("The following temperatures have been recorded this week")
+        for i in temperature_list:
+            print(i)
+        return ''
     
     except:
         print(f"Error fetching data.")
-        return []
-
+        return []'''
 
 
 
