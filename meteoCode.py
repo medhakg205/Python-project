@@ -1,6 +1,7 @@
 import mysql.connector as con
 import random
-import datetime
+from datetime import datetime, timedelta
+
 cnc = con.connect(
         host = 'localhost',
         user = 'root',
