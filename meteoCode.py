@@ -144,7 +144,7 @@ def generate_initial_data(conn):
     conn.commit()
     print(f"✅ Successfully inserted {cursor.rowcount} total observations.")
 
-def arrangeLoc():
+def adminview():
     cursor.execute('select * from locations order by location_id ASC ; ')
     data=cursor.fetchall()
     print(data)
