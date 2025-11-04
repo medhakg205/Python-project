@@ -266,3 +266,17 @@ def main():
                     if ch == 0:
                         print("\nGoodbye! See you soon!")
                         break
+         match choice:
+        case 1:
+            print("You selected: View Weather Data")
+        case 2:
+            print("You selected: Insert New Observation")
+        case 3:
+            print("You selected: Edit Location Name")
+        case 4:
+            print("You selected: Delete Location")
+        case 5:
+            print("Exiting program...")
+            exit()
+        case _:
+            print("Invalid choice! Please try again.")
