@@ -93,30 +93,29 @@ def generate_initial_data(conn):
     conn.commit()
     print(f"✅ Successfully inserted {cursor.rowcount} total observations.")
 
-def arrangeSub():
+def arrangeLoc():
     cursor.execute('select * from locations order by location_id ASC ; ')
     cursor.fetchall()
     cnc.commit()
 
-def removeCity(locid):
-    # cursor.execute("select * from locations;")
-    cursor.execute("select * from locations,observations where location_id = %s; ",(locid,))
+def removeCity():
+    cursor.execute("select * from locations, observations;")
     data = cursor.fetchall()
     print(data)
 
-    subj = int(input("\nEnter Location ID you want to remove: "))
+    locid = int(input("\nEnter Location ID you want to remove: "))
 
-    qry = ' select exists (select 1 from subjects where subid =  %s); '
-    cursor.execute(qry, (subj,))
+    qry = ' select exists (select 1 from locations where location_id =  %s); '
+    cursor.execute(qry, (locid,))
     data = cursor.fetchall()
 
     if qry:
-        cursor.execute("delete from subjects where subid= %s;", (subj,))
+        cursor.execute("delete from locations where location_id= %s;", (locid,))
         cnc.commit()
-        print(f"\nSuccessfully removed {d[1]} from user ID {user_id}.")
+        print(f"\nSuccessfully removed.")
 
     else:
-        print(f"\nUnable to find subject ID {subj}.")
+        print(f"\nUnable to find Location ID")
 
 def analyze_weather_stats(location_id, days=7):
     """Analyzes the fetched temperature data using NumPy."""
