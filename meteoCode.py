@@ -91,6 +91,47 @@ def editCity(locid):
     cnc.commit()
     print(f"\nName has successfully been changed to {cityn} .")
 
+def view_location_weather(loc_id):
+    try:
+        # Query: Join locations and observations
+        qry = '''
+            SELECT l.city, l.state, l.latitude, l.longitude,
+                   o.timestamp, o.temp, o.humidity, o.wind_speed_kmh
+            FROM locations l
+            JOIN observations o ON l.location_id = o.location_id
+            WHERE l.location_id = %s
+            ORDER BY o.timestamp ASC;
+        '''
+        cursor.execute(qry, (loc_id,))
+        records = cursor.fetchall()
+
+        if not records:
+            print("\nNo data found for that Location ID!")
+            return
+
+        # Print the static details (same for all rows)
+        city, state, lat, lon = records[0][0], records[0][1], records[0][2], records[0][3]
+
+        print(f"\n--- Location Details ---")
+        print(f"City:       {city}")
+        print(f"State:      {state}")
+        print(f"Latitude:   {lat}")
+        print(f"Longitude:  {lon}")
+        print("\n--- Weather Observations ---")
+        print(f"{'Timestamp':<20} {'Temp (°C)':<10} {'Humidity (%)':<13} {'Wind (km/h)':<12}")
+        print("-" * 60)
+
+        # Print weather observations
+        for row in records:
+            timestamp, temp, humidity, wind = row[4], row[5], row[6], row[7]
+            print(f"{str(timestamp):<20} {temp:<10} {humidity:<13} {wind:<12}")
+
+        print("\n")
+
+    except Exception as e:
+        print("Error:", e)
+
+
 def login():
     user = input("Admin Login or Client Login: ")
     if user.lower() == 'admin':
@@ -102,47 +143,6 @@ def login():
             return -1
     else:
         return False
-
-def generate_initial_data(conn):
-    """Generates synthetic weather data for multiple dates and locations."""
-    cursor = cnc.cursor()
-
-    # 1. Ensure Locations are in the table (You must run this first)
-    # The actual IDs will be needed for the Observations table
-    # This example assumes you've run the SQL INSERTs for CITIES
-
-    # Simple way to get location IDs (assuming they are in the database)
-    location_data = cursor.execute("select location_id, city from Locations").fetchall()
-
-    if not location_data:
-        print("ERROR: Please populate the Locations table first.")
-        return
-
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=30)  # Data for the last 30 days
-
-    print("Generating 30 days of observations...")
-
-    current_date = start_date
-    while current_date <= end_date:
-        for loc_id, city_name in location_data:
-            # Generate somewhat realistic, random data for weather
-            temp = round(random.uniform(20.0, 35.0), 1)  # 20.0 to 35.0 C
-            humidity = random.randint(50, 95)  # 50% to 95%
-            wind = round(random.uniform(5.0, 25.0), 1)  # 5.0 to 25.0 km/h
-
-            # Insert the generated observation
-            sql_insert = '''
-                INSERT INTO Observations 
-                (location_id, timestamp, temperature_c, humidity_perc, wind_speed_kmh)
-                VALUES (?, ?, ?, ?, ?)
-            '''
-            cursor.execute(sql_insert, (loc_id, current_date, temp, humidity, wind))
-
-        current_date += timedelta(hours=6)  # Log observations every 6 hours
-
-    conn.commit()
-    print(f"✅ Successfully inserted {cursor.rowcount} total observations.")
 
 def adminview():
     cursor.execute('select * from locations order by location_id ASC ; ')
