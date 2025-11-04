@@ -264,8 +264,4 @@ def main():
             print("You selected: Edit Location Name")
         case 4:
             print("You selected: Delete Location")
-        case 5:
-            print("Exiting program...")
-            exit()
-        case _:
-            print("Invalid choice! Please try again.")
+        
