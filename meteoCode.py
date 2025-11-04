@@ -98,6 +98,7 @@ def login():
             return True
         else:
             print("Invalid password")
+            return -1
     else:
         return False
 
