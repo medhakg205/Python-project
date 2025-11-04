@@ -93,7 +93,6 @@ def editCity(locid):
 
 def view_location_weather(loc_id):
     try:
-        # Query: Join locations and observations
         qry = '''
             SELECT l.city, l.state, l.latitude, l.longitude,
                    o.timestamp, o.temp, o.humidity, o.wind_speed_kmh
@@ -109,7 +108,6 @@ def view_location_weather(loc_id):
             print("\nNo data found for that Location ID!")
             return
 
-        # Print the static details (same for all rows)
         city, state, lat, lon = records[0][0], records[0][1], records[0][2], records[0][3]
 
         print(f"\n--- Location Details ---")
@@ -121,7 +119,6 @@ def view_location_weather(loc_id):
         print(f"{'Timestamp':<20} {'Temp (°C)':<10} {'Humidity (%)':<13} {'Wind (km/h)':<12}")
         print("-" * 60)
 
-        # Print weather observations
         for row in records:
             timestamp, temp, humidity, wind = row[4], row[5], row[6], row[7]
             print(f"{str(timestamp):<20} {temp:<10} {humidity:<13} {wind:<12}")
@@ -182,7 +179,6 @@ def removeCity():
 
 
 def analyze_weather_stats(location_id, days=7):
-    """Analyzes the fetched temperature data using NumPy."""
 
     data_list = fetch_temperature_data(location_id, days)
 
@@ -190,11 +186,10 @@ def analyze_weather_stats(location_id, days=7):
         print("No observation data available for analysis.")
         return
 
-    # Convert the Python list into a NumPy array
-    # This is where NumPy is incorporated
+
     temperatures = np.array(data_list)
 
-    # Use NumPy functions for efficient calculations
+    # Using NumPy functions for efficient calculations
     max_temp = np.max(temperatures)
     min_temp = np.min(temperatures)
     average_temp = np.mean(temperatures)
@@ -208,15 +203,11 @@ def analyze_weather_stats(location_id, days=7):
     print(f"**Average Temperature:** {average_temp:.2f}°C")
     print(f"**Temperature Standard Deviation (Variability):** {std_dev:.2f}")
 
-# --- Integration into Admin Menu ---
-# def admin_view_reports_menu():
-#     # ... ask admin for location_id and days ...
-#     analyze_weather_stats(location_id=1, days=7)
+
 
 def fetch_temperature_data(location_id, days=7):
     try:
 
-        # SQL to get temperature and timestamp for the location
         sql_select = '''
             SELECT temp
             FROM Observations
@@ -226,9 +217,7 @@ def fetch_temperature_data(location_id, days=7):
         '''
 
     
-        # Fetch temperatures for the last 7 days
         cursor.execute(sql_select, (location_id, days))
-        # Use a list comprehension to flatten the list of tuples into a simple list of numbers
         temperature_list = [row[0] for row in cursor.fetchall()]
         return temperature_list
     
