@@ -144,7 +144,8 @@ def generate_initial_data(conn):
 
 def arrangeLoc():
     cursor.execute('select * from locations order by location_id ASC ; ')
-    cursor.fetchall()
+    data=cursor.fetchall()
+    print(data)
     cnc.commit()
 
 def removeCity():
