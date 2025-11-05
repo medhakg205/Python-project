@@ -290,7 +290,7 @@ def main():
                     if ch == 0:
                         print("\nGoodbye! See you soon!")
                         break
-         match choice:
+        match choice:
         case 1:
             print("You selected: View Weather Data")
         case 2:
