@@ -303,6 +303,7 @@ def main():
                             editCity()
                         case 4:
                             print("You selected: Delete Location")
+                            removeCity()
          else:
                 print("Welcome Client!\nClick on 'e' to exit, any other key to view data")
                 cch = input("Press any key (except 'e') to view data. ")
