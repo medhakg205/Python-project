@@ -3,18 +3,20 @@ import shutil
 from datetime import datetime, timedelta
 import re
 import numpy as np
+
 cnc = con.connect(
-        host = 'localhost',
-        user = 'root',
-        password = 'MYSQL123',
-        database = 'meteorological'
-    )
+    host='localhost',
+    user='root',
+    password='MYSQL123',
+    database='meteorological'
+)
 
 if not cnc.is_connected:
-     print('Error connecting to database!')
-     exit()
+    print('Error connecting to database!')
+    exit()
 else:
-  cursor = cnc.cursor()
+    cursor = cnc.cursor()
+
 
 def createTable():
     qry1 = '''CREATE TABLE IF NOT EXISTS locations(
@@ -39,10 +41,12 @@ def createTable():
     cursor.execute(qry2)
 
     cnc.commit()
-def InsertIntoLocations():
-        query = "INSERT INTO locations (city, state, latitude, longitude) VALUES (%s, %s, %s, %s)"
 
-        data = [
+
+def InsertIntoLocations():
+    query = "INSERT INTO locations (city, state, latitude, longitude) VALUES (%s, %s, %s, %s)"
+
+    data = [
         ('Mumbai', 'Maharashtra', 19.0760, 72.8777),
         ('Delhi', 'Delhi', 28.6139, 77.2090),
         ('Bengaluru', 'Karnataka', 12.9716, 77.5946),
@@ -54,11 +58,12 @@ def InsertIntoLocations():
         ('Jaipur', 'Rajasthan', 26.9124, 75.7873),
         ('Lucknow', 'Uttar Pradesh', 26.8467, 80.9462)]
 
-        cursor.executemany(query, data)
-        cnc.commit()
+    cursor.executemany(query, data)
+    cnc.commit()
+
 
 def InsertIntoObservations():
-        query2='''INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
+    query2 = '''INSERT INTO Observations (location_id, timestamp, temp, humidity, wind_speed_kmh) VALUES
         (1, '2025-11-04 08:00:00', 28.5, 65, 12.4),
         (1, '2025-11-04 14:00:00', 33.2, 58, 15.1),
         (1, '2025-11-03 08:00:00', 27.8, 68, 10.3),
@@ -69,9 +74,10 @@ def InsertIntoObservations():
         (4, '2025-11-04 10:00:00', 30.5, 55, 20.3),
         (4, '2025-11-03 16:00:00', 31.0, 50, 18.9),
         (5, '2025-11-04 11:00:00', 25.8, 63, 11.2);'''
-        cursor.execute(query2)
-        cnc.commit()
-        
+    cursor.execute(query2)
+    cnc.commit()
+
+
 def insert_new_observation():
     try:
         loc_id = int(input("\nEnter Location ID: "))
@@ -125,6 +131,7 @@ def editCity(locid):
     cnc.commit()
     print(f"\nName has successfully been changed to {cityn} .")
 
+
 def view_location_weather(loc_id):
     try:
         qry = '''
@@ -175,17 +182,19 @@ def login():
     else:
         return False
 
+
 def adminview():
     cursor.execute('select * from locations order by location_id ASC ; ')
-    data=cursor.fetchall()
+    data = cursor.fetchall()
     print(data)
     cnc.commit()
+
 
 def removeCity():
     cursor.execute("select * from locations;")
     data = cursor.fetchall()
     for i in data:
-        print(i[0],i[1], end  = '\n')
+        print(i[0], i[1], end='\n')
     locid = int(input("\nEnter Location ID you want to remove: "))
     conf = input("\nAre you sure you want to remove this location? (y/n): ")
     if conf.lower() == 'y':
@@ -213,13 +222,11 @@ def removeCity():
 
 
 def analyze_weather_stats(location_id, days=7):
-
     data_list = fetch_temperature_data(location_id, days)
 
     if not data_list:
         print("No observation data available for analysis.")
         return
-
 
     temperatures = np.array(data_list)
 
@@ -238,7 +245,6 @@ def analyze_weather_stats(location_id, days=7):
     print(f"**Temperature Standard Deviation (Variability):** {std_dev:.2f}")
 
 
-
 def fetch_temperature_data(location_id, days=7):
     try:
 
@@ -250,16 +256,16 @@ def fetch_temperature_data(location_id, days=7):
             ORDER BY timestamp DESC
         '''
 
-    
         cursor.execute(sql_select, (location_id, days))
         temperature_list = [row[0] for row in cursor.fetchall()]
         return temperature_list
-    
+
     except:
         print(f"Error fetching data.")
         return []
 
-#=========================================================
+
+# =========================================================
 
 def main():
     header1 = "WELCOME TO WEATHER-WISE"
@@ -274,16 +280,15 @@ def main():
     print(header2.center(terminal_width), end='\n\n')
 
     result = login()
-
-    if result:
+    if result==True:
         while True:
             print('''\n    
-                         1. Add Data
-                         2. Edit Data
-                         3. Remove Data
-                         4. View Only Mode
-                         If you wish to exit, type '0'
-                        ''')
+                                 1. View Data
+                                 2. Add Data
+                                 3. Edit Data
+                                 4. Delete Data
+                                 If you wish to exit, type '0'
+                                ''')
             ch = int(input('Enter your choice: '))
 
             if ch == 0:
@@ -305,7 +310,8 @@ def main():
             elif ch == 4:
                 print("You selected: Delete Location")
                 removeCity()
-    elif result == 'False':
+
+    elif result == False:
         print("Welcome Client!\nClick on 'e' to exit, any other key to view data")
         cch = input("Press any key (except 'e') to view data. ")
         if cch.lower() == 'e':
@@ -316,11 +322,11 @@ def main():
         else:
             n = int(input("Enter location ID"))
             view_location_weather(n)
-    else:
+    elif result :
         print("Wrong Credentials, retry")
-
+        return 0
 
 main()
 cnc.close()
-       
+
 
