@@ -290,7 +290,7 @@ def main():
                     if ch == 0:
                         print("\nGoodbye! See you soon!")
                         break
-                match choice:
+                match ch:
                         case 1:
                             print("You selected: View Weather Data")
                             loc_id = int(input("Enter location ID"))
