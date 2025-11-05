@@ -3,7 +3,7 @@ import random
 import shutil
 from datetime import datetime, timedelta
 import re
-
+import numpy as np
 cnc = con.connect(
         host = 'localhost',
         user = 'root',
