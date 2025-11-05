@@ -297,8 +297,10 @@ def main():
                             view_location_weather(loc_id):
                         case 2:
                             print("You selected: Insert New Observation")
+                            insert_new_observation()
                         case 3:
                             print("You selected: Edit Location Name")
+                            editCity()
                         case 4:
                             print("You selected: Delete Location")
          else:
