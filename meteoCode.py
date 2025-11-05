@@ -82,7 +82,7 @@ def insert_new_observation():
         location = cursor.fetchone()
 
         if not location:
-            print("❌ Invalid Location ID! No such location exists.")
+            print("Invalid Location ID! No such location exists.")
             return
 
         print(f"Location found: {location[0]}")
@@ -102,10 +102,10 @@ def insert_new_observation():
         cursor.execute(query, (loc_id, timestamp, temp, humidity, wind_speed))
         cnc.commit()
 
-        print("\n✅ New observation record inserted successfully!")
+        print("\nNew observation record inserted successfully!")
 
     except Exception as e:
-        print("\n❌ Error inserting observation:", e)
+        print("\nError inserting observation:", e)
 
 
 def editCity(locid):
@@ -291,14 +291,16 @@ def main():
                         print("\nGoodbye! See you soon!")
                         break
                 match choice:
-                case 1:
-                    print("You selected: View Weather Data")
-                case 2:
-                    print("You selected: Insert New Observation")
-                case 3:
-                    print("You selected: Edit Location Name")
-                case 4:
-                    print("You selected: Delete Location")
+                        case 1:
+                            print("You selected: View Weather Data")
+                            loc_id = int(input("Enter location ID"))
+                            view_location_weather(loc_id):
+                        case 2:
+                            print("You selected: Insert New Observation")
+                        case 3:
+                            print("You selected: Edit Location Name")
+                        case 4:
+                            print("You selected: Delete Location")
          else:
                 print("Welcome Client!\nClick on 'e' to exit, any other key to view data")
                 cch = input("Press any key (except 'e') to view data. ")
