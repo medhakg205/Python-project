@@ -276,6 +276,7 @@ def main():
 
         result = login()
 
+        
         if result:
                 while True:
                     print('''\n    
@@ -290,19 +291,19 @@ def main():
                     if ch == 0:
                         print("\nGoodbye! See you soon!")
                         break
-                match ch:
-                        case 1:
+        
+                    elif ch == 1:
                             print("You selected: View Weather Data")
                             loc_id = int(input("Enter location ID"))
                             view_location_weather(loc_id)
-                            analyze_weather_stats(locid)
-                        case 2:
+                            analyze_weather_stats(loc_id)
+                    elif ch == 2:
                             print("You selected: Insert New Observation")
                             insert_new_observation()
-                        case 3:
+                    elif ch == 3:
                             print("You selected: Edit Location Name")
                             editCity()
-                        case 4:
+                    elif ch == 4:
                             print("You selected: Delete Location")
                             removeCity()
          else:
@@ -315,4 +316,9 @@ def main():
         
                 else:
                     view_location_weather()
+
+main()
+
+
+       
 
