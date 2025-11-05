@@ -315,11 +315,11 @@ def main():
                     exit()
         
                 else:
-                    n=int(input("Enter location ID")
+                    n=int(input("Enter location ID"))
                     view_location_weather(n)
 
 main()
-
+cnc.close()
 
        
 
