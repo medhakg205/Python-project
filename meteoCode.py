@@ -262,63 +262,65 @@ def fetch_temperature_data(location_id, days=7):
 #=========================================================
 
 def main():
-        header1 = "WELCOME TO WEATHER-WISE"
-        header2 = "Meteorological Data Analysis"
+    header1 = "WELCOME TO WEATHER-WISE"
+    header2 = "Meteorological Data Analysis"
 
-        try:
-            terminal_width = shutil.get_terminal_size().columns
-        except:
-            terminal_width = 80  #default in some platforms
+    try:
+        terminal_width = shutil.get_terminal_size().columns
+    except:
+        terminal_width = 80  # default in some platforms
 
-        print(header1.center(terminal_width))
-        print(header2.center(terminal_width), end = '\n\n')
+    print(header1.center(terminal_width))
+    print(header2.center(terminal_width), end='\n\n')
 
-        result = login()
+    result = login()
 
-        
-        if result:
-                while True:
-                    print('''\n    
+    if result:
+        while True:
+            print('''\n    
                          1. Add Data
                          2. Edit Data
                          3. Remove Data
                          4. View Only Mode
                          If you wish to exit, type '0'
                         ''')
-                    ch = int(input('Enter your choice: '))
-        
-                    if ch == 0:
-                        print("\nGoodbye! See you soon!")
-                        break
-        
-                    elif ch == 1:
-                            print("You selected: View Weather Data")
-                            loc_id = int(input("Enter location ID"))
-                            view_location_weather(loc_id)
-                            analyze_weather_stats(loc_id)
-                    elif ch == 2:
-                            print("You selected: Insert New Observation")
-                            insert_new_observation()
-                    elif ch == 3:
-                            print("You selected: Edit Location Name")
-                            editCity()
-                    elif ch == 4:
-                            print("You selected: Delete Location")
-                            removeCity()
-         else:
-                print("Welcome Client!\nClick on 'e' to exit, any other key to view data")
-                cch = input("Press any key (except 'e') to view data. ")
-                if cch.lower() == 'e':
-        
-                    print("\nGoodbye! See you soon!")
-                    exit()
-        
-                else:
-                    n=int(input("Enter location ID"))
-                    view_location_weather(n)
+            ch = int(input('Enter your choice: '))
+
+            if ch == 0:
+                print("\nGoodbye! See you soon!")
+                break
+
+            elif ch == 1:
+                print("You selected: View Weather Data")
+                loc_id = int(input("Enter location ID"))
+                view_location_weather(loc_id)
+                analyze_weather_stats(loc_id)
+            elif ch == 2:
+                print("You selected: Insert New Observation")
+                insert_new_observation()
+            elif ch == 3:
+                print("You selected: Edit Location Name")
+                loc_id = int(input("Enter location ID"))
+                editCity(loc_id)
+            elif ch == 4:
+                print("You selected: Delete Location")
+                removeCity()
+    elif result == 'False':
+        print("Welcome Client!\nClick on 'e' to exit, any other key to view data")
+        cch = input("Press any key (except 'e') to view data. ")
+        if cch.lower() == 'e':
+
+            print("\nGoodbye! See you soon!")
+            exit()
+
+        else:
+            n = int(input("Enter location ID"))
+            view_location_weather(n)
+    else:
+        print("Wrong Credentials, retry")
+
 
 main()
 cnc.close()
-
        
 
