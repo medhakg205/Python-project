@@ -315,7 +315,8 @@ def main():
                     exit()
         
                 else:
-                    view_location_weather()
+                    n=int(input("Enter location ID")
+                    view_location_weather(n)
 
 main()
 
