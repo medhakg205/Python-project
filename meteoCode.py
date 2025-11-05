@@ -294,7 +294,8 @@ def main():
                         case 1:
                             print("You selected: View Weather Data")
                             loc_id = int(input("Enter location ID"))
-                            view_location_weather(loc_id):
+                            view_location_weather(loc_id)
+                            analyze_weather_stats(locid)
                         case 2:
                             print("You selected: Insert New Observation")
                             insert_new_observation()
